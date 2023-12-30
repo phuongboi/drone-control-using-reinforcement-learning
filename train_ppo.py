@@ -45,8 +45,10 @@ def train():
 
     random_seed = 0         # set random seed if required (0 = no random seed)
     log_dir = "log_dir/"
-    run_num = 2
+    run_num = 6
     log_f_name = log_dir + 'PPO_log_' + str(run_num) + ".csv"
+    if not os.path.exists(os.path.join(log_dir, str(run_num))):
+        os.mkdir(os.path.join(log_dir, str(run_num)))
     checkpoint_path = log_dir + "ppo_drone.pth"
 
     print("current logging run number for " + " gym pybulet drone : ", run_num)
@@ -86,8 +88,6 @@ def train():
             action = np.expand_dims(action, axis=0)
             obs, reward, terminated, truncated, info = env.step(action)
             done = terminated or truncated
-            obs2 = obs.squeeze()
-            act2 = action.squeeze()
             #print("Obs:", obs, "\tAction", action, "\tReward:", reward, "\tTerminated:", terminated, "\tTruncated:", truncated)
              # saving reward and is_terminals
             ppo_agent.buffer.rewards.append(reward)
@@ -130,6 +130,7 @@ def train():
             # save model weights
             if time_step % save_model_freq == 0:
                 print("--------------------------------------------------------------------------------------------")
+                checkpoint_path = os.path.join(log_dir, str(run_num), str(i_episode) +"_ppo_drone.pth")
                 print("saving model at : " + checkpoint_path)
                 ppo_agent.save(checkpoint_path)
                 print("model saved")

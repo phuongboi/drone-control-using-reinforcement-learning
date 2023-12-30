@@ -52,7 +52,7 @@ def test():
 
     #####################################################
     DEFAULT_GUI = True
-    DEFAULT_RECORD_VIDEO = True
+    DEFAULT_RECORD_VIDEO = False
     DEFAULT_OUTPUT_FOLDER = 'results'
     DEFAULT_COLAB = False
 
@@ -84,7 +84,9 @@ def test():
     run_num_pretrained = 0      #### set this to load a particular checkpoint num
 
 
-    checkpoint_path = "log_dir/ppo_drone.pth"
+    #checkpoint_path = "log_dir/5/3577_ppo_drone.pth"
+    #checkpoint_path = "log_dir/6/4436_ppo_drone.pth"
+    checkpoint_path = "log_dir/4/4957_ppo_drone.pth"
     print("loading network from : " + checkpoint_path)
 
     ppo_agent.load(checkpoint_path)

@@ -313,11 +313,16 @@ class BaseRLAviary(BaseAviary):
             ############################################################
             #### OBS SPACE OF SIZE 12
             obs_12 = np.zeros((self.NUM_DRONES,12))
+            obs_18 = np.zeros((self.NUM_DRONES,18))
             for i in range(self.NUM_DRONES):
                 #obs = self._clipAndNormalizeState(self._getDroneStateVector(i))
                 obs = self._getDroneStateVector(i)
+                rot_matrix = np.array(p.getMatrixFromQuaternion(obs[3:7]))
+                #print(rot_matrix)
                 obs_12[i, :] = np.hstack([obs[0:3], obs[7:10], obs[10:13], obs[13:16]]).reshape(12,)
+                #obs_18[i, :] = np.hstack([obs[0:3], obs[10:13], obs[13:16], rot_matrix]).reshape(18,)
             ret = np.array([obs_12[i, :] for i in range(self.NUM_DRONES)]).astype('float32')
+            #ret = np.array([obs_18[i, :] for i in range(self.NUM_DRONES)]).astype('float32')
             #### Add action buffer to observation #######################
             # print(ret.shape)
             # for i in range(self.ACTION_BUFFER_SIZE):
