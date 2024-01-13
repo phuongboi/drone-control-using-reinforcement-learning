@@ -45,7 +45,7 @@ def train():
 
     random_seed = 0         # set random seed if required (0 = no random seed)
     log_dir = "log_dir/"
-    run_num = "7"
+    run_num = "hover_8"
     log_f_name = log_dir + 'PPO_log_' + str(run_num) + ".csv"
     if not os.path.exists(os.path.join(log_dir, str(run_num))):
         os.mkdir(os.path.join(log_dir, str(run_num)))

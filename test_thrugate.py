@@ -10,6 +10,7 @@ from ppo import PPO
 from gym_pybullet_drones.utils.Logger import Logger
 from gym_pybullet_drones.envs.HoverAviary import HoverAviary
 from gym_pybullet_drones.envs.MultiHoverAviary import MultiHoverAviary
+from gym_pybullet_drones.envs.FlyThruGateAvitary import FlyThruGateAvitary
 from gym_pybullet_drones.utils.utils import sync, str2bool
 from gym_pybullet_drones.utils.enums import ObservationType, ActionType
 
@@ -63,7 +64,7 @@ def test():
         print(filename)
         os.makedirs(filename+'/')
 
-    env = HoverAviary(gui=DEFAULT_GUI,
+    env = FlyThruGateAvitary(gui=DEFAULT_GUI,
                            obs=DEFAULT_OBS,
                            act=DEFAULT_ACT,
                            record=DEFAULT_RECORD_VIDEO)
@@ -86,7 +87,7 @@ def test():
 
     #checkpoint_path = "log_dir/5/3577_ppo_drone.pth"
     #checkpoint_path = "log_dir/6/4436_ppo_drone.pth"
-    checkpoint_path = "log_dir/4/4957_ppo_drone.pth"
+    checkpoint_path = "log_dir/thrugate/1301_ppo_drone.pth"
     print("loading network from : " + checkpoint_path)
 
     ppo_agent.load(checkpoint_path)

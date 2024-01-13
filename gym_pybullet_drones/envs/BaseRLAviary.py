@@ -192,7 +192,7 @@ class BaseRLAviary(BaseAviary):
             if self.ACT_TYPE == ActionType.RPM:
                 #print(self.HOVER_RPM)
                 rpm[k,:] = np.array(self.HOVER_RPM * (1+0.05*target))
-                #print(target)
+
                 #rpm = np.array(target)
 
             elif self.ACT_TYPE == ActionType.PID:

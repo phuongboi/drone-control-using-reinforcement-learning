@@ -3,11 +3,11 @@ import numpy as np
 import pybullet as p
 import pkg_resources
 
-from gym_pybullet_drones.utils.enums import DroneModel, Physics
-from gym_pybullet_drones.envs.single_agent_rl.BaseSingleAgentAviary import ActionType, ObservationType, BaseSingleAgentAviary
+from gym_pybullet_drones.envs.BaseRLAviary import BaseRLAviary
+from gym_pybullet_drones.utils.enums import DroneModel, Physics, ActionType, ObservationType
 
 
-class FlyThruGateAviary(BaseSingleAgentAviary):
+class FlyThruGateAvitary(BaseRLAviary):
     """Single agent RL problem: fly through a gate."""
 
     ################################################################################
@@ -17,8 +17,8 @@ class FlyThruGateAviary(BaseSingleAgentAviary):
                  initial_xyzs=None,
                  initial_rpys=None,
                  physics: Physics=Physics.PYB,
-                 freq: int=240,
-                 aggregate_phy_steps: int=1,
+                 pyb_freq: int=240,
+                 ctrl_freq: int=30,
                  gui=False,
                  record=False,
                  obs: ObservationType=ObservationType.KIN,
@@ -52,12 +52,14 @@ class FlyThruGateAviary(BaseSingleAgentAviary):
             The type of action space (1 or 3D; RPMS, thurst and torques, or waypoint with PID control)
 
         """
+        self.EPISODE_LEN_SEC = 8
         super().__init__(drone_model=drone_model,
+                         num_drones = 1,
                          initial_xyzs=initial_xyzs,
                          initial_rpys=initial_rpys,
                          physics=physics,
-                         freq=freq,
-                         aggregate_phy_steps=aggregate_phy_steps,
+                         pyb_freq=pyb_freq,
+                         ctrl_freq=ctrl_freq,
                          gui=gui,
                          record=record,
                          obs=obs,
@@ -102,12 +104,30 @@ class FlyThruGateAviary(BaseSingleAgentAviary):
 
         """
         state = self._getDroneStateVector(0)
-        norm_ep_time = (self.step_counter/self.SIM_FREQ) / self.EPISODE_LEN_SEC
-        return -10 * np.linalg.norm(np.array([0, -2*norm_ep_time, 0.75])-state[0:3])**2
-
+        norm_ep_time = (self.step_counter/self.PYB_FREQ) / self.EPISODE_LEN_SEC
+        #return -10 * np.linalg.norm(np.array([0, -2*norm_ep_time, 0.75])-state[0:3])**2
+        return max (0, 1 - np.linalg.norm(np.array([0, -2*norm_ep_time, 0.75])-state[0:3]))
     ################################################################################
+    def _computeTruncated(self):
+        """Computes the current truncated value.
 
-    def _computeDone(self):
+        Returns
+        -------
+        bool
+            Whether the current episode timed out.
+
+        """
+        state = self._getDroneStateVector(0)
+        if (abs(state[0]) > 1.5 or abs(state[1]) > 1.5 or state[2] > 2.0# Truncate when the drone is too far away
+             or abs(state[7]) > .4 or abs(state[8]) > .4 # Truncate when the drone is too tilted
+        ):
+            return True
+        if self.step_counter/self.PYB_FREQ > self.EPISODE_LEN_SEC:
+            return True
+        else:
+            return False
+
+    def _computeTerminated(self):
         """Computes the current done value.
 
         Returns
@@ -116,7 +136,7 @@ class FlyThruGateAviary(BaseSingleAgentAviary):
             Whether the current episode is done.
 
         """
-        if self.step_counter/self.SIM_FREQ > self.EPISODE_LEN_SEC:
+        if self.step_counter/self.PYB_FREQ > self.EPISODE_LEN_SEC:
             return True
         else:
             return False

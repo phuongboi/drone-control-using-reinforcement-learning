@@ -1,5 +1,7 @@
 ### Control drone in gym-pybullet-drones using ppo
 Hovering a quacopter with some predefined position using [gym-pybullet-drones](https://github.com/utiasDSL/gym-pybullet-drones/) env with PPO algorithm from [PPO-PyTorch](https://github.com/nikhilbarhate99/PPO-PyTorch)
+#### 13/01/2023 Update hovering with some contrains
+* Add some contrains in reward function
 #### 30/12/2023 Update training result
 #### 28/12/2023 Init commit
 * Change reward function, compute terminate

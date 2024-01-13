@@ -75,10 +75,17 @@ class HoverAviary(BaseRLAviary):
 
         """
         state = self._getDroneStateVector(0)
-        #ret = max(0, 2 - np.linalg.norm(self.TARGET_POS-state[0:3])**4)
-        ret = max(0, 1 - np.linalg.norm(self.TARGET_POS-state[0:3]))
-        #ret = max(0, np.sqrt(2) - np.linalg.norm(self.TARGET_POS-state[0:3]))
-        #
+        #ret = max(0, 2 - np.linalg.norm(self.TARGET_POS-state[0:3])**4) # original
+        # if np.linalg.norm(self.TARGET_POS-state[0:3]) < 0.001:
+        #     ret = 1000
+        # else:
+        #     ret = - np.linalg.norm(self.TARGET_POS-state[0:3])
+        rpy = state[7:10]
+        ang_vel=state[13:16]
+
+        #ret = max(0, 1 - np.linalg.norm(self.TARGET_POS-state[0:3])) # reward for hovering at (0, 0, 1)
+        #ret = max(0, np.sqrt(2) - np.linalg.norm(self.TARGET_POS-state[0:3])) # reward for hovering at (0, 1, 1)
+        ret = max(0, 1 - np.linalg.norm(self.TARGET_POS-state[0:3])) - 0.001*np.linalg.norm(rpy) - 0.001* np.linalg.norm(ang_vel)
         return ret
 
     ################################################################################
