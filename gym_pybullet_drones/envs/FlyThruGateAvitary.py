@@ -75,22 +75,33 @@ class FlyThruGateAvitary(BaseRLAviary):
 
         """
         super()._addObstacles()
-        p.loadURDF(pkg_resources.resource_filename('gym_pybullet_drones', 'assets/architrave.urdf'),
-                   [0, -1, .55],
-                   p.getQuaternionFromEuler([0, 0, 0]),
+        p.loadURDF(pkg_resources.resource_filename('gym_pybullet_drones', 'assets/gate.urdf'),
+                   [0, -1, 0],
+                   p.getQuaternionFromEuler([0, 0, 1.5]),
                    physicsClientId=self.CLIENT
                    )
-        for i in range(10):
-            p.loadURDF("cube_small.urdf",
-                       [-.3, -1, .02+i*0.05],
-                       p.getQuaternionFromEuler([0, 0, 0]),
-                       physicsClientId=self.CLIENT
-                       )
-            p.loadURDF("cube_small.urdf",
-                       [.3, -1, .02+i*0.05],
-                       p.getQuaternionFromEuler([0,0,0]),
-                       physicsClientId=self.CLIENT
-                       )
+
+        # p.loadURDF(pkg_resources.resource_filename('gym_pybullet_drones', 'assets/gate.urdf'),
+        #            [1, -2, 0.5],
+        #            p.getQuaternionFromEuler([0, 0, 2.5]),
+        #            physicsClientId=self.CLIENT
+        #            )
+        # p.loadURDF("door.urdf",
+        #           [0, -0.9, .7],
+        #            p.getQuaternionFromEuler([0,0,0]),
+        #            physicsClientId=self.CLIENT
+        #            )
+        # for i in range(15):
+        #     p.loadURDF("cube_small.urdf",
+        #                [-.3, -0.9, .02+i*0.05],
+        #                p.getQuaternionFromEuler([0, 0, 0]),
+        #                physicsClientId=self.CLIENT
+        #                )
+        #     p.loadURDF("cube_small.urdf",
+        #                [.3,-0.9, .02+i*0.05],
+        #                p.getQuaternionFromEuler([0,0,0]),
+        #                physicsClientId=self.CLIENT
+        #                )
 
     ################################################################################
 
