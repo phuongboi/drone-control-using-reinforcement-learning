@@ -3,7 +3,7 @@ Hovering a quacopter with some predefined position using [gym-pybullet-drones](h
 #### 25/09/2024 Update drone racing
 * Refer to my recent project on [drone racing](https://github.com/phuongboi/drone-control-using-reinforcement-learning) in gym pybulet
 #### 06/09/2024 Update fly through the gate
-* I test FlyThruGateAvitary environment with PPO with some modify in reward function. I created a gate model with figuro.io to and add pybullet.
+* I test FlyThruGateAvitary environment with PPO with some modify in reward function. I created a gate model with Tinkercad to and add pybullet.
 * To train: `python train_thrugate.py`, to test: `python test_thrugate.py`
 #### 20/02/2024 Note about ppo implementation
 * Recently, I figure out the frustration of drone at hover position may come from fixed `action_std` of this PPO implementation, they setting `action_std_init = 0.6` and decay this value during training time. ~~In inference mode, there is no mechanism to reduce or remove this variance, so control output this vary all the time.~~ I look at some other implementation of Soft Actor Critic, they use one more layer to learn action std beside action mean.
