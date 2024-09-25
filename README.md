@@ -1,7 +1,7 @@
 ### Control drone in gym-pybullet-drones using ppo
 Hovering a quacopter with some predefined position using [gym-pybullet-drones](https://github.com/utiasDSL/gym-pybullet-drones/) env with PPO algorithm from [PPO-PyTorch](https://github.com/nikhilbarhate99/PPO-PyTorch)
 #### 25/09/2024 Update drone racing
-* Refer to my recent project on [drone racing](https://github.com/phuongboi/drone-control-using-reinforcement-learning) in gym pybulet
+* Refer to my recent project on [drone racing](https://github.com/phuongboi/drone-racing-using-reinforcement-learning) in gym pybulet
 #### 06/09/2024 Update fly through the gate
 * I test FlyThruGateAvitary environment with PPO with some modify in reward function. I created a gate model with Tinkercad to and add pybullet.
 * To train: `python train_thrugate.py`, to test: `python test_thrugate.py`
